@@ -9,14 +9,13 @@ const router = Router()
 
 router.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
-router.post('/cadastro', UsuarioController.cadastrar())
-router.post('/login', UsuarioController.entrar())
-router.post('/recupera-senha', UsuarioController.recuperar())
+router.post('/cadastro', UsuarioController.cadastrar)
+router.post('/login', UsuarioController.entrar)
+router.post('/recupera-senha', UsuarioController.recuperar)
 
-
-router.get('/dados/:idU', DespesaController)
-router.post('/dados/:idU', DespesaController)
-router.put('/dados/:idD', DespesaController)
-router.delete('/dados/:idD', DespesaController)
+router.post('/:idU/adicionar', DespesaController.adicionar)
+router.get('/:idU/listar', DespesaController.listar)
+router.put('/:idD/atualizar', DespesaController.atualizar)
+router.delete('/:idD/deletar', DespesaController.deletar)
 
 module.exports = router
