@@ -16,6 +16,6 @@ router.post('/recupera-senha', UsuarioController.recuperar)
 router.post('/:idU/adicionar', DespesaController.adicionar)
 router.get('/:idU/listar', DespesaController.listar)
 router.put('/:idD/atualizar', DespesaController.atualizar)
-router.delete('/:idD/deletar', DespesaController.deletar)
+router.put('/:idD/deletar', DespesaController.deletar)
 
 module.exports = router
