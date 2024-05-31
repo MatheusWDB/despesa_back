@@ -22,7 +22,7 @@ class DespesaController {
                 valor: resposta.valor,
                 descricao: resposta.descricao,
                 dia: dia,
-                mês: mes,
+                mes: mes,
                 ano: ano
             };
         })
