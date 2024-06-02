@@ -21,9 +21,11 @@ class DespesaController {
                 idDespesa: resposta.idDespesa,
                 valor: resposta.valor,
                 descricao: resposta.descricao,
+                origem: resposta.origem,
                 dia: dia,
                 mes: mes,
-                ano: ano
+                ano: ano,
+                pago: resposta.pago
             };
         })
 

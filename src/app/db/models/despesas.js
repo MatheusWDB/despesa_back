@@ -37,6 +37,15 @@ module.exports = (sequelize, DataTypes) => {
     descricao: {
       type: DataTypes.STRING
     },
+    origem: {
+      allowNull: false,
+      type: DataTypes.STRING,
+    },
+    pago: {
+      allowNull: false,
+      type: DataTypes.ENUM('V','F'),
+      defaultValue: 'F'
+    },
     deletado: {
       allowNull: false,
       type: DataTypes.ENUM('V','F'),

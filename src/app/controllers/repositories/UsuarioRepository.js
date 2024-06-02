@@ -5,10 +5,14 @@ class UsuarioRepository {
 
     async cadastrar(cadastro) {
         try {
+            console.log(cadastro)
             const [newCadastro, criado] = await db.usuarios.findOrCreate({
                 where: {
-                    cpf: cadastro.cpf,
-                    email: cadastro.email
+                    [Op.or]: [
+                        { cpf: cadastro.cpf },
+                        { email: cadastro.email }
+                    ]
+
                 },
                 defaults: cadastro
             })
@@ -25,12 +29,7 @@ class UsuarioRepository {
 
     async entrar(login) {
         const usuario = await db.usuarios.findOne({
-            where: {
-                [Op.or]: [
-                    {email: login.login},
-                    {cpf: login.login}
-                ]
-            }
+            where: { email: login.email }
         })
 
         if (usuario) {
@@ -40,7 +39,7 @@ class UsuarioRepository {
                 return 'Senha incorreta!'
             }
         }
-        return 'CPF ou email não cadastrado!'
+        return 'Email não cadastrado!'
     }
 
     async recuperar() {
