@@ -34,7 +34,7 @@ class UsuarioRepository {
 
         if (usuario) {
             if (login.senha === usuario.senha) {
-                return usuario.idUsuario
+                return { idUsuario: usuario.idUsuario, nome: usuario.nome, cpf: usuario.cpf, email: usuario.email, senha: usuario.senha, imagem: null}
             } else {
                 return 'Senha incorreta!'
             }

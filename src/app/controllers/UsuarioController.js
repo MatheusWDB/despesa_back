@@ -18,8 +18,8 @@ class UsuarioController {
         const login = req.body
         const resposta = await UsuarioRepository.entrar(login)
         console.log(resposta)
-        if (typeof resposta === 'number') {
-            return res.status(200).json({ idUsuario: resposta })
+        if (typeof resposta !== 'string') {
+            return res.status(200).json(resposta)
         }
         res.status(401).send(resposta)
     }
