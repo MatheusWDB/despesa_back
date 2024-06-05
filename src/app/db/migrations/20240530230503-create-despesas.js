@@ -44,6 +44,9 @@ module.exports = {
         type: DataTypes.ENUM('V','F'),
         defaultValue: 'F'
       },
+      foto: {
+        type: DataTypes.BLOB
+      },
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE

@@ -42,6 +42,9 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.ENUM('V','F'),
       defaultValue: 'F'
+    },
+    foto: {
+      type: DataTypes.BLOB
     }
   }, {
     sequelize,
