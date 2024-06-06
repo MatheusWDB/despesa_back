@@ -1,3 +1,313 @@
 {
-    
+  "swagger": "2.0",
+  "info": {
+    "title": "Despesa",
+    "description": "Gerenciador de depesas",
+    "version": "1.0.0"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/cadastro": {
+      "post": {
+        "tags": [
+          "Usuário"
+        ],
+        "summary": "Realizar o cadastro",
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "nome": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "cpf": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "senha": {
+                  "type": "string",
+                  "example": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User registered successfully."
+          },
+          "401": {
+            "description": "Server failure."
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "tags": [
+          "Usuário"
+        ],
+        "summary": "Realizar o login",
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "senha": {
+                  "type": "string",
+                  "example": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User registered successfully.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "idUsuario": {
+                  "type": "number",
+                  "example": 0
+                },
+                "nome": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "cpf": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "foto": {
+                  "type": "string",
+                  "example": "string"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401": {
+            "description": "Server failure."
+          }
+        }
+      }
+    },
+    "/{idU}/adicionar": {
+      "post": {
+        "tags": [
+          "Despesa"
+        ],
+        "summary": "Adiciona despesa",
+        "description": "",
+        "parameters": [
+          {
+            "name": "idU",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "descricao": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "valor": {
+                  "type": "number",
+                  "example": 0
+                },
+                "origem": {
+                  "type": "string",
+                  "example": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User registered successfully."
+          }
+        }
+      }
+    },
+    "/{idU}/listar": {
+      "get": {
+        "tags": [
+          "Despesa"
+        ],
+        "summary": "Lista as despesas",
+        "description": "",
+        "parameters": [
+          {
+            "name": "idU",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User registered successfully.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "idDespesa": {
+                    "type": "number",
+                    "example": 0
+                  },
+                  "descrincao": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "valor": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "origem": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "ano": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "mes": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "dia": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "pago": {
+                    "type": "string",
+                    "example": "string"
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401": {
+            "description": "Server failure."
+          }
+        }
+      }
+    },
+    "/{idD}/atualizar": {
+      "put": {
+        "tags": [
+          "Despesa"
+        ],
+        "summary": "Atualizar despesa",
+        "description": "",
+        "parameters": [
+          {
+            "name": "idD",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "descrincao": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "valor": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "origem": {
+                  "type": "string",
+                  "example": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User registered successfully."
+          },
+          "401": {
+            "description": "Server failure."
+          }
+        }
+      }
+    },
+    "/{idD}/deletar": {
+      "put": {
+        "tags": [
+          "Despesa"
+        ],
+        "summary": "Deletar despesa",
+        "description": "",
+        "parameters": [
+          {
+            "name": "idD",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User registered successfully."
+          },
+          "401": {
+            "description": "Server failure."
+          }
+        }
+      }
+    }
+  }
 }
