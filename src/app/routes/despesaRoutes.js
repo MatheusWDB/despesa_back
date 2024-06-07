@@ -8,7 +8,7 @@ router.post('/:idU/adicionar', DespesaController.adicionar, () => {
     /*
         #swagger.tags = ['Despesa']
         #swagger.summary = 'Adiciona despesa'
-        #swagger.description = ''
+        #swagger.description = 'Usuário irá adicionar uma nova despesa contedo valor, origem e, se quiser, uma descrição.'
         #swagger.parameters['body'] = {
             in: 'body',                            
             description: '',                   
@@ -20,8 +20,8 @@ router.post('/:idU/adicionar', DespesaController.adicionar, () => {
                 origem: 'string',
             }
         }
-        #swagger.responses[200] = { 
-            description: 'User registered successfully.'
+        #swagger.responses[201] = { 
+            description: 'A solicitação foi bem-sucedida e um novo recurso foi criado.'
         }
 */
 })
@@ -29,9 +29,9 @@ router.get('/:idU/listar', DespesaController.listar, () => {
     /*
         #swagger.tags = ['Despesa']
         #swagger.summary = 'Lista as despesas'
-        #swagger.description = ''
+        #swagger.description = 'Será listadas todas as despesas do usuário contendo o id, a descrição, valor, origem, data e a situação se está pago ou não.'
         #swagger.responses[200] = { 
-            description: 'User registered successfully.',
+            description: 'A solicitação foi bem-sucedida e o servidor retornou os dados solicitados.',
             schema: [
                 {
                     idDespesa: 0,
@@ -45,16 +45,13 @@ router.get('/:idU/listar', DespesaController.listar, () => {
                 }
             ]
         }
-        #swagger.responses[401] = { 
-            description: 'Server failure.'
-        }
 */
 })
 router.put('/:idD/atualizar', DespesaController.atualizar, () => {
     /*
         #swagger.tags = ['Despesa']
         #swagger.summary = 'Atualizar despesa'
-        #swagger.description = ''
+        #swagger.description = 'Usuário irá atualizar a descrição, valor ou origem da despesa especificada.'
         #swagger.parameters['body'] = {
             in: 'body',                            
             description: '',                   
@@ -67,11 +64,9 @@ router.put('/:idD/atualizar', DespesaController.atualizar, () => {
             }
         }
 
-        #swagger.responses[200] = { 
-            description: 'User registered successfully.'
+        #swagger.responses[204] = { 
+            description: 'A solicitação foi bem-sucedida, mas o servidor não está retornando nenhum conteúdo.'
         }
-        #swagger.responses[401] = { 
-            description: 'Server failure.'
         }
 */
 })
@@ -79,12 +74,9 @@ router.put('/:idD/deletar', DespesaController.deletar, () => {
     /*
         #swagger.tags = ['Despesa']
         #swagger.summary = 'Deletar despesa'
-        #swagger.description = ''
-        #swagger.responses[200] = { 
-            description: 'User registered successfully.'
-        }
-        #swagger.responses[401] = { 
-            description: 'Server failure.'
+        #swagger.description = 'Usuário irá deletar a despesa especificada.'
+        #swagger.responses[204] = { 
+            description: 'A solicitação foi bem-sucedida, mas o servidor não está retornando nenhum conteúdo.'
         }
 */
 })

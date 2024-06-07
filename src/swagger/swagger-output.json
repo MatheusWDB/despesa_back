@@ -17,7 +17,7 @@
           "Usuário"
         ],
         "summary": "Realizar o cadastro",
-        "description": "",
+        "description": "Usuário irá informar o nome, cpf, email e uma senha. A conta será criada se o cpf e o email não estiverem cadastrado.",
         "parameters": [
           {
             "name": "body",
@@ -48,11 +48,11 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "User registered successfully."
+          "201": {
+            "description": "A solicitação foi bem-sucedida e um novo recurso foi criado como resultado."
           },
-          "401": {
-            "description": "Server failure."
+          "400": {
+            "description": "A solicitação não pôde ser entendida ou está malformada."
           }
         }
       }
@@ -63,7 +63,7 @@
           "Usuário"
         ],
         "summary": "Realizar o login",
-        "description": "",
+        "description": "Usuário irá informar o email e a senha. Se estiver correto o login será efetuado.",
         "parameters": [
           {
             "name": "body",
@@ -87,7 +87,7 @@
         ],
         "responses": {
           "200": {
-            "description": "User registered successfully.",
+            "description": "A solicitação foi bem-sucedida.",
             "schema": {
               "type": "object",
               "properties": {
@@ -118,7 +118,7 @@
             }
           },
           "401": {
-            "description": "Server failure."
+            "description": "A solicitação requer autenticação do usuário."
           }
         }
       }
@@ -129,13 +129,13 @@
           "Despesa"
         ],
         "summary": "Adiciona despesa",
-        "description": "",
+        "description": "Usuário irá adicionar uma nova despesa contedo valor, origem e, se quiser, uma descrição.",
         "parameters": [
           {
             "name": "idU",
             "in": "path",
             "required": true,
-            "type": "integer"
+            "type": "string"
           },
           {
             "name": "body",
@@ -162,8 +162,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "User registered successfully."
+          "201": {
+            "description": "A solicitação foi bem-sucedida e um novo recurso foi criado."
           }
         }
       }
@@ -174,18 +174,18 @@
           "Despesa"
         ],
         "summary": "Lista as despesas",
-        "description": "",
+        "description": "Será listadas todas as despesas do usuário contendo o id, a descrição, valor, origem, data e a situação se está pago ou não.",
         "parameters": [
           {
             "name": "idU",
             "in": "path",
             "required": true,
-            "type": "integer"
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "User registered successfully.",
+            "description": "A solicitação foi bem-sucedida e o servidor retornou os dados solicitados.",
             "schema": {
               "type": "array",
               "items": {
@@ -229,9 +229,6 @@
                 "name": "main"
               }
             }
-          },
-          "401": {
-            "description": "Server failure."
           }
         }
       }
@@ -242,13 +239,13 @@
           "Despesa"
         ],
         "summary": "Atualizar despesa",
-        "description": "",
+        "description": "Usuário irá atualizar a descrição, valor ou origem da despesa especificada.",
         "parameters": [
           {
             "name": "idD",
             "in": "path",
             "required": true,
-            "type": "integer"
+            "type": "string"
           },
           {
             "name": "body",
@@ -275,11 +272,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "User registered successfully."
-          },
-          "401": {
-            "description": "Server failure."
+          "204": {
+            "description": "A solicitação foi bem-sucedida, mas o servidor não está retornando nenhum conteúdo."
           }
         }
       }
@@ -290,21 +284,18 @@
           "Despesa"
         ],
         "summary": "Deletar despesa",
-        "description": "",
+        "description": "Usuário irá deletar a despesa especificada.",
         "parameters": [
           {
             "name": "idD",
             "in": "path",
             "required": true,
-            "type": "integer"
+            "type": "string"
           }
         ],
         "responses": {
-          "200": {
-            "description": "User registered successfully."
-          },
-          "401": {
-            "description": "Server failure."
+          "204": {
+            "description": "A solicitação foi bem-sucedida, mas o servidor não está retornando nenhum conteúdo."
           }
         }
       }

@@ -8,7 +8,7 @@ router.post('/cadastro', UsuarioController.cadastrar, () => {
     /*
         #swagger.tags = ['Usuário']
         #swagger.summary = 'Realizar o cadastro'
-        #swagger.description = ''
+        #swagger.description = 'Usuário irá informar o nome, cpf, email e uma senha. A conta será criada se o cpf e o email não estiverem cadastrado.'
         #swagger.parameters['body'] = {
             in: 'body',                            
             description: '',                   
@@ -22,11 +22,11 @@ router.post('/cadastro', UsuarioController.cadastrar, () => {
             }
         }
 
-        #swagger.responses[200] = { 
-            description: 'User registered successfully.'
+        #swagger.responses[201] = { 
+            description: 'A solicitação foi bem-sucedida e um novo recurso foi criado como resultado.'
         }
-        #swagger.responses[401] = { 
-            description: 'Server failure.'
+        #swagger.responses[400] = { 
+            description: 'A solicitação não pôde ser entendida ou está malformada.'
         }
      */
 });
@@ -36,7 +36,7 @@ router.post('/login', UsuarioController.entrar, () => {
     /*
         #swagger.tags = ['Usuário']
         #swagger.summary = 'Realizar o login'
-        #swagger.description = ''
+        #swagger.description = 'Usuário irá informar o email e a senha. Se estiver correto o login será efetuado.'
         #swagger.parameters['body'] = {
             in: 'body',                            
             description: '',                   
@@ -47,9 +47,8 @@ router.post('/login', UsuarioController.entrar, () => {
                 senha: 'string'
             }
         }
-
         #swagger.responses[200] = { 
-            description: 'User registered successfully.',
+            description: 'A solicitação foi bem-sucedida.',
             schema: {
                 idUsuario: 0,
                 nome: 'string',
@@ -59,7 +58,7 @@ router.post('/login', UsuarioController.entrar, () => {
             }
         }
         #swagger.responses[401] = { 
-            description: 'Server failure.'
+            description: 'A solicitação requer autenticação do usuário.'
         }
      */
 });
@@ -69,7 +68,7 @@ router.post('/recuperar', UsuarioController.recuperar, () => {
         #swagger.ignore = true
         #swagger.tags = ['Usuário']
         #swagger.summary = 'Recuperar senha'
-        #swagger.description = ''
+        #swagger.description = 'Usuário irá informar o cpf. Se o cpf estiver cadastrado, irá mandar no email equivalente uma nova senha.'
         #swagger.parameters['body'] = {
             in: 'body',                            
             description: '',                   
@@ -80,14 +79,14 @@ router.post('/recuperar', UsuarioController.recuperar, () => {
             }
         }
         #swagger.responses[200] = { 
-            description: 'User registered successfully.',
+            description: 'A solicitação foi bem-sucedida.',
             schema: {
                 nome: 'string'
                 email: 'string'
             }
         }
-        #swagger.responses[401] = { 
-            description: 'Server failure.'
+        #swagger.responses[400] = { 
+            description: 'A solicitação não pôde ser entendida ou está malformada.'
         }
      */
 });
