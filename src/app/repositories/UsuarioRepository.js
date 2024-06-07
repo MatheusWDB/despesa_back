@@ -5,7 +5,6 @@ class UsuarioRepository {
 
     async cadastrar(cadastro) {
         try {
-            console.log(cadastro)
             const [newCadastro, criado] = await db.usuarios.findOrCreate({
                 where: {
                     [Op.or]: [
@@ -21,29 +20,56 @@ class UsuarioRepository {
                 ? newCadastro
                 : 'Email ou cpf já cadastrado!'
         } catch (error) {
-            console.log(error)
+            console.error(error)
             throw new Error('Erro ao verificar os dados');
         }
 
     }
 
     async entrar(login) {
-        const usuario = await db.usuarios.findOne({
-            where: { email: login.email }
-        })
+        try {
+            const usuario = await db.usuarios.findOne({
+                where: { email: login.email }
+            })
 
-        if (usuario) {
-            if (login.senha === usuario.senha) {
-                return { idUsuario: usuario.idUsuario, nome: usuario.nome, cpf: usuario.cpf, email: usuario.email, senha: usuario.senha, foto: usuario.foto}
-            } else {
-                return 'Senha incorreta!'
+            if (usuario) {
+                if (login.senha === usuario.senha) {
+                    return { idUsuario: usuario.idUsuario, nome: usuario.nome, cpf: usuario.cpf, email: usuario.email, senha: usuario.senha, foto: usuario.foto }
+                } else {
+                    return 'Senha incorreta!'
+                }
             }
+            return 'Email não cadastrado!'
+        } catch (error) {
+            console.error(error)
+            throw new Error('Erro ao verificar os dados');
         }
-        return 'Email não cadastrado!'
     }
 
     async recuperar() {
 
+    }
+
+    async atualaizar(idU, usuario) {
+        try {
+            const email = await db.usuarios.findOne({
+                where: {
+                    email: usuario.email,
+                    [Op.not]: [{ idUsuario: idU }]
+                }
+            })
+            if (!email) {
+                const novoUsuario = await db.usuarios.update(usuario, {
+                    where: { idUsuario: idU }
+                })
+            } else {
+                return 'Email já cadastrado'
+            }
+
+        } catch (error) {
+            console.error(error)
+            throw new Error('Erro ao verificar os dados');
+        }
     }
 
 }

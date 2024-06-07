@@ -47,7 +47,7 @@ router.get('/:idU/listar', DespesaController.listar, () => {
         }
 */
 })
-router.put('/:idD/atualizar', DespesaController.atualizar, () => {
+router.put('/:idD/atualizar-despesa', DespesaController.atualizar, () => {
     /*
         #swagger.tags = ['Despesa']
         #swagger.summary = 'Atualizar despesa'
@@ -67,7 +67,7 @@ router.put('/:idD/atualizar', DespesaController.atualizar, () => {
         #swagger.responses[204] = { 
             description: 'A solicitação foi bem-sucedida, mas o servidor não está retornando nenhum conteúdo.'
         }
-        }
+        
 */
 })
 router.put('/:idD/deletar', DespesaController.deletar, () => {

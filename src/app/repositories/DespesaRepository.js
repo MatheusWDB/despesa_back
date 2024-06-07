@@ -4,14 +4,13 @@ class DespesaRepository {
 
     async adicionar(idU, despesa) {
         try {
-            console.log(despesa)
             await db.despesas.create({
                 idUsuario: idU,
                 ...despesa
             })
 
         } catch (error) {
-            console.log(error)
+            console.error(error)
             throw new Error('Erro ao verificar os dados');
         }
     }
@@ -28,7 +27,7 @@ class DespesaRepository {
             return lista
 
         } catch (error) {
-            console.log(error)
+            console.error(error)
             throw new Error('Erro ao verificar os dados');
         }
     }
@@ -40,7 +39,7 @@ class DespesaRepository {
             })
 
         } catch (error) {
-            console.log(error)
+            console.error(error)
             throw new Error('Erro ao verificar os dados');
         }
     }
@@ -52,7 +51,7 @@ class DespesaRepository {
             })
 
         } catch (error) {
-            console.log(error)
+            console.error(error)
             throw new Error('Erro ao verificar os dados');
         }
     }

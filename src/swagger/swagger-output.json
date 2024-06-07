@@ -52,7 +52,10 @@
             "description": "A solicitação foi bem-sucedida e um novo recurso foi criado como resultado."
           },
           "400": {
-            "description": "A solicitação não pôde ser entendida ou está malformada."
+            "description": "Bad Request"
+          },
+          "409": {
+            "description": "A solicitação não pôde ser processada devido a um conflito com o estado atual do recurso."
           }
         }
       }
@@ -119,6 +122,54 @@
           },
           "401": {
             "description": "A solicitação requer autenticação do usuário."
+          }
+        }
+      }
+    },
+    "/{idU}/atualizar": {
+      "put": {
+        "tags": [
+          "Usuário"
+        ],
+        "summary": "Atualizar dados",
+        "description": "Usuário irá atualizar o nome, email ou senha.",
+        "parameters": [
+          {
+            "name": "idU",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "nome": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "senha": {
+                  "type": "string",
+                  "example": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "A solicitação foi bem-sucedida, mas o servidor não está retornando nenhum conteúdo."
+          },
+          "409": {
+            "description": "A solicitação não pôde ser processada devido a um conflito com o estado atual do recurso."
           }
         }
       }
@@ -233,7 +284,7 @@
         }
       }
     },
-    "/{idD}/atualizar": {
+    "/{idD}/atualizar-despesa": {
       "put": {
         "tags": [
           "Despesa"

@@ -25,8 +25,8 @@ router.post('/cadastro', UsuarioController.cadastrar, () => {
         #swagger.responses[201] = { 
             description: 'A solicitação foi bem-sucedida e um novo recurso foi criado como resultado.'
         }
-        #swagger.responses[400] = { 
-            description: 'A solicitação não pôde ser entendida ou está malformada.'
+        #swagger.responses[409] = { 
+            description: 'A solicitação não pôde ser processada devido a um conflito com o estado atual do recurso.'
         }
      */
 });
@@ -90,5 +90,30 @@ router.post('/recuperar', UsuarioController.recuperar, () => {
         }
      */
 });
+
+router.put('/:idU/atualizar', UsuarioController.atualizar, () => {
+    /*
+        #swagger.tags = ['Usuário']
+        #swagger.summary = 'Atualizar dados'
+        #swagger.description = 'Usuário irá atualizar o nome, email ou senha.'
+        #swagger.parameters['body'] = {
+            in: 'body',                            
+            description: '',                   
+            required: true,                     
+            type: 'object',
+            schema: {
+                nome: 'string',
+                email: 'string',
+                senha: 'string'
+            }
+        }
+        #swagger.responses[204] = { 
+            description: 'A solicitação foi bem-sucedida, mas o servidor não está retornando nenhum conteúdo.'
+        }
+        #swagger.responses[409] = { 
+            description: 'A solicitação não pôde ser processada devido a um conflito com o estado atual do recurso.'
+        }
+     */
+})
 
 module.exports = router;

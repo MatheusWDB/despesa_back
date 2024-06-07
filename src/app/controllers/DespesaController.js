@@ -5,6 +5,7 @@ class DespesaController {
         async adicionar(req, res) {
                 const idU = req.params.idU
                 const despesa = req.body
+                
                 await DespesaRepository.adicionar(idU, despesa)
                 res.status(201).send('Despesa adicionada!')
         }
