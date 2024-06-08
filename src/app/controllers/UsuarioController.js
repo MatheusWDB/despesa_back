@@ -15,11 +15,23 @@ class UsuarioController {
     async entrar(req, res) {
         const login = req.body
         const resposta = await UsuarioRepository.entrar(login)
-        if (typeof resposta !== 'string') {
-            const token = jwtHelper.generateToken({ id: resposta.idUsuario });
-            return res.status(200).json({ ...resposta, token })
+        if (typeof resposta === 'number') {
+            const idU = resposta
+            const token = jwtHelper.generateToken({ idU });
+            return res.status(200).json({ idU })
+
         }
         res.status(401).send(resposta)
+    }
+
+    async usuario(req, res) {
+        const idU = req.params.idU
+        const resposta = await UsuarioRepository.usuario(idU)
+        if (typeof resposta === 'string') {
+            return res.status(400).send(resposta)
+        } else {
+            return res.status(200).json(resposta)
+        }
     }
 
     async recuperar(req, res) {
@@ -27,7 +39,7 @@ class UsuarioController {
     }
 
     async atualizar(req, res) {
-        const idU = req.params.idU        
+        const idU = req.params.idU
         const usuario = req.body
         const resposta = await UsuarioRepository.atualaizar(idU, usuario)
         if (!resposta) {

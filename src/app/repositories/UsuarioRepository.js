@@ -34,7 +34,7 @@ class UsuarioRepository {
 
             if (usuario) {
                 if (login.senha === usuario.senha) {
-                    return { idUsuario: usuario.idUsuario, nome: usuario.nome, cpf: usuario.cpf, email: usuario.email, senha: usuario.senha, foto: usuario.foto }
+                    return usuario.idUsuario
                 } else {
                     return 'Senha incorreta!'
                 }
@@ -43,6 +43,25 @@ class UsuarioRepository {
         } catch (error) {
             console.error(error)
             throw new Error('Erro ao verificar os dados');
+        }
+    }
+
+    async usuario(idU) {
+        try {
+            const usuario = await db.usuarios.findOne({
+                attributes: ['nome', 'cpf', 'email', 'senha', 'foto'],
+                where: {
+                    idUsuario: idU,
+                    deletado: 'F'
+                }
+            })
+            if (!usuario) {
+                return 'Essa conta foi deletada, para recuperar entre em contato.'
+            }
+            return usuario
+        } catch (error) {
+            console.error(error)
+
         }
     }
 

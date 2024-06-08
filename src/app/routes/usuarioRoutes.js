@@ -3,6 +3,20 @@ const UsuarioController = require('../controllers/UsuarioController');
 
 const router = Router();
 
+router.get('/:idU/usuario', UsuarioController.usuario, () => {
+    /*
+        #swagger.tags = ['Usuário']
+        #swagger.summary = 'Listar as informações do Usuário'
+        #swagger.description = 'Após o login, irá listar nome, cpf, email, senha e a foto do usuário.'
+
+        #swagger.responses[201] = { 
+            description: 'A solicitação foi bem-sucedida e um novo recurso foi criado como resultado.'
+        }
+        #swagger.responses[409] = { 
+            description: 'A solicitação não pôde ser processada devido a um conflito com o estado atual do recurso.'
+        }
+     */
+})
 
 router.post('/cadastro', UsuarioController.cadastrar, () => {
     /*

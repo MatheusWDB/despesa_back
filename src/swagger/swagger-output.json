@@ -11,6 +11,37 @@
     "http"
   ],
   "paths": {
+    "/{idU}/usuario": {
+      "get": {
+        "tags": [
+          "Usuário"
+        ],
+        "summary": "Listar as informações do Usuário",
+        "description": "Após o login, irá listar nome, cpf, email, senha e a foto do usuário.",
+        "parameters": [
+          {
+            "name": "idU",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "A solicitação foi bem-sucedida e um novo recurso foi criado como resultado."
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "409": {
+            "description": "A solicitação não pôde ser processada devido a um conflito com o estado atual do recurso."
+          }
+        }
+      }
+    },
     "/cadastro": {
       "post": {
         "tags": [
