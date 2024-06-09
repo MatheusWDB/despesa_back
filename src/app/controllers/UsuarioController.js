@@ -1,10 +1,12 @@
 const UsuarioRepository = require('../repositories/UsuarioRepository')
 const jwtHelper = require('../utils/jwtHelper');
+const bcrypt = require('bcrypt');
 
 class UsuarioController {
 
     async cadastrar(req, res) {
         const cadastro = req.body
+        cadastro.senha = bcrypt.hashSync(req.body.senha, 8);
         const resposta = await UsuarioRepository.cadastrar(cadastro)
         if (typeof resposta === 'object') {
             return res.status(201).send('Cadastro realizado com sucesso!')
@@ -18,15 +20,15 @@ class UsuarioController {
         if (typeof resposta === 'number') {
             const idU = resposta
             const token = jwtHelper.generateToken({ idU });
-            return res.status(200).json({ idU })
+            return res.status(200).json({token})
 
         }
         res.status(401).send(resposta)
     }
 
-    async usuario(req, res) {
+    async usuarioInfo(req, res) {
         const idU = req.params.idU
-        const resposta = await UsuarioRepository.usuario(idU)
+        const resposta = await UsuarioRepository.usuarioInfo(idU)
         if (typeof resposta === 'string') {
             return res.status(400).send(resposta)
         } else {

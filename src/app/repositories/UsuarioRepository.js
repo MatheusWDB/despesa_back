@@ -1,5 +1,6 @@
 const db = require('../database/models')
 const { Op } = require('sequelize');
+const bcrypt = require('bcrypt');
 
 class UsuarioRepository {
 
@@ -29,11 +30,13 @@ class UsuarioRepository {
     async entrar(login) {
         try {
             const usuario = await db.usuarios.findOne({
+                attributes: ['idUsuario', 'senha'],
                 where: { email: login.email }
             })
 
             if (usuario) {
-                if (login.senha === usuario.senha) {
+                usuario.senha = bcrypt.compareSync(login.senha, usuario.senha);
+                if (usuario.senha) {
                     return usuario.idUsuario
                 } else {
                     return 'Senha incorreta!'
@@ -42,23 +45,19 @@ class UsuarioRepository {
             return 'Email não cadastrado!'
         } catch (error) {
             console.error(error)
-            throw new Error('Erro ao verificar os dados');
         }
     }
 
-    async usuario(idU) {
+    async usuarioInfo(idU) {
         try {
             const usuario = await db.usuarios.findOne({
-                attributes: ['nome', 'cpf', 'email', 'senha', 'foto'],
+                attributes: ['nome', 'cpf', 'email', 'foto'],
                 where: {
                     idUsuario: idU,
                     deletado: 'F'
                 }
             })
-            if (!usuario) {
-                return 'Essa conta foi deletada, para recuperar entre em contato.'
-            }
-            return usuario
+            return usuario ? usuario : 'Essa conta foi deletada, para recuperar entre em contato.'
         } catch (error) {
             console.error(error)
 

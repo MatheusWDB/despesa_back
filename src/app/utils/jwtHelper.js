@@ -4,7 +4,7 @@ require('dotenv').config()
 const secretKey = process.env.SECRET || 'your-secret-key'; // Certifique-se de definir SECRET no seu arquivo .env
 
 // Função para gerar um token
-const generateToken = (payload, expiresIn = '1h') => {
+const generateToken = (payload, expiresIn = '60s') => {
     return jwt.sign(payload, secretKey, { expiresIn });
 };
 

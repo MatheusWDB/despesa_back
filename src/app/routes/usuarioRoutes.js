@@ -1,9 +1,10 @@
 const Router = require('express');
 const UsuarioController = require('../controllers/UsuarioController');
+const authenticateToken = require('../middlewares/authMiddleware')
 
 const router = Router();
 
-router.get('/:idU/usuario', UsuarioController.usuario, () => {
+router.get('/:idU/usuario', authenticateToken, UsuarioController.usuarioInfo, () => {
     /*
         #swagger.tags = ['Usuário']
         #swagger.summary = 'Listar as informações do Usuário'
