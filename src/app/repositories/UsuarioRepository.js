@@ -27,19 +27,26 @@ class UsuarioRepository {
 
     }
 
-    async entrar(login) {
+    async login(login, token) {
         try {
             const usuario = await db.usuarios.findOne({
-                attributes: ['idUsuario', 'senha'],
-                where: { email: login.email }
+                attributes: ['idUsuario', 'email', 'senha'],
+                where: {
+                    email: login.email,
+                    deletado: 'F'
+                }
             })
 
             if (usuario) {
-                usuario.senha = bcrypt.compareSync(login.senha, usuario.senha);
-                if (usuario.senha) {
-                    return usuario.idUsuario
+                if (token) {
+                    const verificarSenha = bcrypt.compareSync(login.senha, usuario.senha);
+                    if (verificarSenha) {
+                        return usuario
+                    } else {
+                        return 'Senha incorreta!'
+                    }
                 } else {
-                    return 'Senha incorreta!'
+                    return 
                 }
             }
             return 'Email não cadastrado!'
@@ -50,12 +57,8 @@ class UsuarioRepository {
 
     async usuarioInfo(idU) {
         try {
-            const usuario = await db.usuarios.findOne({
-                attributes: ['nome', 'cpf', 'email', 'foto'],
-                where: {
-                    idUsuario: idU,
-                    deletado: 'F'
-                }
+            const usuario = await db.usuarios.findByPk(idU, {
+                attributes: ['nome', 'cpf', 'email', 'foto']
             })
             return usuario ? usuario : 'Essa conta foi deletada, para recuperar entre em contato.'
         } catch (error) {

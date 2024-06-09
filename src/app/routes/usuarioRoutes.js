@@ -4,20 +4,6 @@ const authenticateToken = require('../middlewares/authMiddleware')
 
 const router = Router();
 
-router.get('/:idU/usuario', authenticateToken, UsuarioController.usuarioInfo, () => {
-    /*
-        #swagger.tags = ['Usuário']
-        #swagger.summary = 'Listar as informações do Usuário'
-        #swagger.description = 'Após o login, irá listar nome, cpf, email, senha e a foto do usuário.'
-
-        #swagger.responses[201] = { 
-            description: 'A solicitação foi bem-sucedida e um novo recurso foi criado como resultado.'
-        }
-        #swagger.responses[409] = { 
-            description: 'A solicitação não pôde ser processada devido a um conflito com o estado atual do recurso.'
-        }
-     */
-})
 
 router.post('/cadastro', UsuarioController.cadastrar, () => {
     /*
@@ -46,8 +32,7 @@ router.post('/cadastro', UsuarioController.cadastrar, () => {
      */
 });
 
-
-router.post('/login', UsuarioController.entrar, () => {
+router.post('/login', UsuarioController.login, () => {
     /*
         #swagger.tags = ['Usuário']
         #swagger.summary = 'Realizar o login'
@@ -78,6 +63,10 @@ router.post('/login', UsuarioController.entrar, () => {
      */
 });
 
+router.post('/login-token', authenticateToken, UsuarioController.loginToken,() => {
+
+})
+
 router.post('/recuperar', UsuarioController.recuperar, () => {
     /*
         #swagger.ignore = true
@@ -106,7 +95,22 @@ router.post('/recuperar', UsuarioController.recuperar, () => {
      */
 });
 
-router.put('/:idU/atualizar', UsuarioController.atualizar, () => {
+router.get('/:idU/usuario', authenticateToken, UsuarioController.usuarioInfo, () => {
+    /*
+        #swagger.tags = ['Usuário']
+        #swagger.summary = 'Listar as informações do Usuário'
+        #swagger.description = 'Após o login, irá listar nome, cpf, email, senha e a foto do usuário.'
+
+        #swagger.responses[201] = { 
+            description: 'A solicitação foi bem-sucedida e um novo recurso foi criado como resultado.'
+        }
+        #swagger.responses[409] = { 
+            description: 'A solicitação não pôde ser processada devido a um conflito com o estado atual do recurso.'
+        }
+     */
+})
+
+router.put('/:idU/atualizar', authenticateToken, UsuarioController.atualizar, () => {
     /*
         #swagger.tags = ['Usuário']
         #swagger.summary = 'Atualizar dados'
