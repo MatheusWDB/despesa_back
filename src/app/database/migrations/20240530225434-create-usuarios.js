@@ -27,6 +27,15 @@ module.exports = {
         type: DataTypes.STRING,
         unique: true
       },
+      telefone: {        
+        allowNull: false,
+        type: DataTypes.STRING,
+        unique: true
+      },
+      dataNascimento: {        
+        allowNull: false,
+        type: DataTypes.STRING
+      },
       senha: {        
         allowNull: false,
         type: DataTypes.STRING
