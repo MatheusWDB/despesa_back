@@ -39,13 +39,14 @@ module.exports = {
         type: DataTypes.ENUM('V','F'),
         defaultValue: 'F'
       },
+      data: {
+        allowNull: false,
+        type: DataTypes.STRING
+      },
       deletado: {
         allowNull: false,
         type: DataTypes.ENUM('V','F'),
         defaultValue: 'F'
-      },
-      foto: {
-        type: DataTypes.BLOB
       },
       createdAt: {
         allowNull: false,

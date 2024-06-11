@@ -41,6 +41,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.STRING,
     },
+    data: {
+      allowNull: false,
+      type: DataTypes.STRING
+    },
     pago: {
       allowNull: false,
       type: DataTypes.ENUM('V','F'),
@@ -50,14 +54,6 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.ENUM('V','F'),
       defaultValue: 'F'
-    },
-    createdAt: {
-      allowNull: false,
-      type: DataTypes.DATE
-    },
-    updatedAt: {
-      allowNull: false,
-      type: DataTypes.DATE
     }
   }, {
     sequelize,

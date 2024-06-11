@@ -40,6 +40,9 @@ module.exports = {
         allowNull: false,
         type: DataTypes.STRING
       },
+      foto: {
+        type: DataTypes.BLOB
+      },
       deletado: {
         allowNull: false,
         type: DataTypes.ENUM('V','F'),

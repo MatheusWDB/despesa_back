@@ -4,22 +4,42 @@ const bcrypt = require('bcrypt');
 
 class UsuarioRepository {
 
+    async verificar(dados) {
+        try {
+            const verificado = await db.usuarios.findOne({
+                where: {
+                    [Op.or]: [
+                        { email: dados.email },
+                        { cpf: dados.cpf }
+                    ]
+                }
+            })
+            if (verificado) {
+                if (verificado.cpf === dados.cpf) {
+                    return 'CPF já cadastrado'
+                } else {
+                    return 'Email já cadastrado'
+                }
+            } else {
+                return true
+            }
+        } catch {
+
+        }
+    }
+
     async cadastrar(cadastro) {
         try {
             const [newCadastro, criado] = await db.usuarios.findOrCreate({
                 where: {
-                    [Op.or]: [
-                        { cpf: cadastro.cpf },
-                        { email: cadastro.email }
-                    ]
-
+                    telefone: cadastro.telefone
                 },
                 defaults: cadastro
             })
 
             return criado
                 ? newCadastro
-                : 'Email ou cpf já cadastrado!'
+                : 'Telefone já cadastrado!'
         } catch (error) {
             console.error(error)
             throw new Error('Erro ao verificar os dados');
@@ -83,6 +103,7 @@ class UsuarioRepository {
                 const novoUsuario = await db.usuarios.update(usuario, {
                     where: { idUsuario: idU }
                 })
+                return
             } else {
                 return 'Email já cadastrado'
             }

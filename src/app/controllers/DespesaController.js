@@ -14,10 +14,9 @@ class DespesaController {
                 const idU = req.params.idU
                 let resposta = await DespesaRepository.listar(idU)
                 resposta = resposta.map(resposta => {
-                        const data = new Date(resposta.createdAt);
-                        const dia = data.getDate().toString().padStart(2, '0'); // Obtém o dia com zero à esquerda
-                        const mes = (data.getMonth() + 1).toString().padStart(2, '0'); // Obtém o mês com zero à esquerda
-                        const ano = data.getFullYear().toString(); // Obtém o ano
+                        const dia = resposta.data.split('/')[0]
+                        const mes = resposta.data.split('/')[1]
+                        const ano = resposta.data.split('/')[2]
                         return {
                                 idDespesa: resposta.idDespesa,
                                 valor: resposta.valor,
@@ -29,7 +28,7 @@ class DespesaController {
                                 pago: resposta.pago
                         };
                 })
-
+                
                 res.status(200).json(resposta)
         }
 

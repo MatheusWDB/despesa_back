@@ -4,6 +4,15 @@ const bcrypt = require('bcrypt');
 
 class UsuarioController {
 
+    async verificar(req, res) {
+        const dados = req.body
+        const resposta = await UsuarioRepository.verificar(dados)
+        if (resposta !== true) {
+            return res.status(400).send(resposta)
+        }
+        res.status(200).end()
+    }
+
     async cadastrar(req, res) {
         const cadastro = req.body
         cadastro.senha = bcrypt.hashSync(req.body.senha, 8);

@@ -4,6 +4,9 @@ const authenticateToken = require('../middlewares/authMiddleware')
 
 const router = Router();
 
+router.post('/verificar', UsuarioController.verificar, () => {
+
+})
 
 router.post('/cadastro', UsuarioController.cadastrar, () => {
     /*
@@ -63,7 +66,7 @@ router.post('/login', UsuarioController.login, () => {
      */
 });
 
-router.post('/login-token', authenticateToken, UsuarioController.loginToken,() => {
+router.post('/login-token', authenticateToken, UsuarioController.loginToken, () => {
 
 })
 

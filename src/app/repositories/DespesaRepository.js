@@ -18,7 +18,7 @@ class DespesaRepository {
     async listar(idU) {
         try {
             const lista = await db.despesas.findAll({
-                attributes: ['idDespesa', 'valor', 'descricao', 'origem', 'pago', 'createdAt'],
+                attributes: ['idDespesa', 'valor', 'descricao', 'origem', 'pago', 'data'],
                 where: {
                     idUsuario: idU,
                     deletado: 'F'
