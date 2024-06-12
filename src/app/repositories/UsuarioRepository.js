@@ -93,20 +93,63 @@ class UsuarioRepository {
 
     async atualaizar(idU, usuario) {
         try {
-            const email = await db.usuarios.findOne({
-                where: {
-                    email: usuario.email,
-                    [Op.not]: [{ idUsuario: idU }]
-                }
-            })
-            if (!email) {
-                const novoUsuario = await db.usuarios.update(usuario, {
-                    where: { idUsuario: idU }
+            if (usuario.email) {
+                const email = await db.usuarios.findOne({
+                    where: {
+                        email: usuario.email,
+                        [Op.not]: [{ idUsuario: idU }]
+                    }
                 })
-                return
-            } else {
-                return 'Email já cadastrado'
+                if (!email) {
+                    await db.usuarios.update(usuario, {
+                        where: { idUsuario: idU }
+                    })
+                    return
+                } else {
+                    return 'Email já cadastrado'
+                }
             }
+
+            if (usuario.telefone) {
+                const telefone = await db.usuarios.findOne({
+                    where: {
+                        telefone: usuario.telefone,
+                        [Op.not]: [{ idUsuario: idU }]
+                    }
+                })
+
+                if (!telefone) {
+                    await db.usuarios.update(usuario, {
+                        where: { idUsuario: idU }
+                    })
+                    return
+                } else {
+                    return 'Telefone já cadastrado'
+                }
+            }
+
+            if (usuario.senha) {
+                const senha = await db.usuarios.findOne({
+                    where: {
+                        senha: usuario.senha,
+                        idUsuario: idU
+                    }
+                })
+
+                if (senha) {
+                    await db.usuarios.update(usuario.senha, {
+                        where: { idUsuario: idU }
+                    })
+                    return
+                } else {
+                    return 'Senha incorreta'
+                }
+            }
+
+            await db.usuarios.update(usuario, {
+                where: { idUsuario: idU }
+            })
+            return
 
         } catch (error) {
             console.error(error)

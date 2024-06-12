@@ -43,7 +43,7 @@ class UsuarioController {
     }
 
     async usuarioInfo(req, res) {
-        const idU = req.params.idU        
+        const idU = req.params.idU
         const resposta = await UsuarioRepository.usuarioInfo(idU)
         if (typeof resposta === 'string') {
             return res.status(400).send(resposta)
@@ -62,6 +62,9 @@ class UsuarioController {
     async atualizar(req, res) {
         const idU = req.params.idU
         const usuario = req.body
+        if (usuario.senha) {
+            usuario.senha = bcrypt.hashSync(req.body.senha, 8)
+        }
         const resposta = await UsuarioRepository.atualaizar(idU, usuario)
         if (!resposta) {
             return res.status(204).end()
