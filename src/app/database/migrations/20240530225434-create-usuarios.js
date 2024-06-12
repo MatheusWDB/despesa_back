@@ -41,7 +41,7 @@ module.exports = {
         type: DataTypes.STRING
       },
       foto: {
-        type: DataTypes.BLOB
+        type: DataTypes.BLOB('long')
       },
       deletado: {
         allowNull: false,

@@ -53,7 +53,7 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: 'F'
     },
     foto: {
-      type: DataTypes.BLOB
+      type: DataTypes.BLOB('long')
     }
   }, {
     sequelize,

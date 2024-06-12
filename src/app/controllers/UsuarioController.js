@@ -43,12 +43,14 @@ class UsuarioController {
     }
 
     async usuarioInfo(req, res) {
-        const idU = req.params.idU
-        console.log(idU)
+        const idU = req.params.idU        
         const resposta = await UsuarioRepository.usuarioInfo(idU)
         if (typeof resposta === 'string') {
             return res.status(400).send(resposta)
         } else {
+            if (resposta.foto) {
+                resposta.foto = resposta.foto.toString()
+            }
             return res.status(200).json(resposta)
         }
     }
