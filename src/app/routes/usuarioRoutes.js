@@ -4,10 +4,6 @@ const authenticateToken = require('../middlewares/authMiddleware')
 
 const router = Router();
 
-router.post('/verificar', UsuarioController.verificar, () => {
-
-})
-
 router.post('/cadastro', UsuarioController.cadastrar, () => {
     /*
         #swagger.tags = ['Usuário']

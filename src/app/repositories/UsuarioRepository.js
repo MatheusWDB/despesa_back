@@ -4,72 +4,106 @@ const bcrypt = require('bcrypt');
 
 class UsuarioRepository {
 
-    async verificar(dados) {
+    async verificar(dados, idU) {
         try {
-            const verificado = await db.usuarios.findOne({
-                where: {
-                    [Op.or]: [
-                        { email: dados.email },
-                        { cpf: dados.cpf }
-                    ]
+            if (dados.cadastro) {
+                const invalido = await db.usuarios.findOne({
+                    where: {
+                        [Op.or]: [
+                            { email: dados.cadastro.email },
+                            { cpf: dados.cadastro.cpf },
+                            { telefone: dados.cadastro.telefone }
+                        ]
+                    }
+                })
+                if (invalido) {
+                    if (invalido.cpf === dados.cadastro.cpf) {
+                        return 'CPF já cadastrado'
+                    } else if (invalido.email === dados.cadastro.email) {
+                        return 'Email já cadastrado'
+                    } else {
+                        return 'Telefone já cadastrado'
+                    }
                 }
-            })
-            if (verificado) {
-                if (verificado.cpf === dados.cpf) {
-                    return 'CPF já cadastrado'
-                } else {
-                    return 'Email já cadastrado'
-                }
-            } else {
-                return true
             }
-        } catch {
 
+            if (dados.login) {
+                const valido = await db.usuarios.findOne({
+                    attributes: ['idUsuario', 'email', 'senha', 'deletado'],
+                    where: { email: dados.login.email }
+                })
+                if (valido) {
+                    if (valido.deletado === 'F') {
+                        const verificarSenha = bcrypt.compareSync(dados.login.senha, valido.senha)
+                        if (!verificarSenha) {
+                            return 'Senha incorreta!'
+                        }
+
+                        return valido
+                    } else {
+                        return 'Conta deletada'
+                    }
+                } else {
+                    return 'Email não cadastrado'
+                }
+            }
+
+            if (dados.usuario) {
+                if (dados.usuario.telefone || dados.usuario.email) {
+                    const invalido = await db.usuarios.findOne({
+                        where: {
+                            [Op.or]: [
+                                { email: dados.usuario.email },
+                                { telefone: dados.usuario.telefone }
+                            ],
+                            [Op.not]: [
+                                { idUsuario: idU }
+                            ]
+                        }
+                    })
+                    if (invalido) {
+                        if (invalido.email === dados.usuario.email) {
+                            return 'Email já cadastrado'
+                        } else {
+                            return 'Telefone já cadastrado'
+                        }
+                    }
+                }
+                const senha = await db.usuarios.findByPk(idU)
+                const verificarSenha = bcrypt.compareSync(dados.usuario.senha, senha.senha)
+                if (!verificarSenha) {
+                    return 'Senha incorreta!'
+                }
+            }
+
+            return false
+
+        } catch {
+            console.error(error)
         }
     }
 
     async cadastrar(cadastro) {
         try {
-            const [newCadastro, criado] = await db.usuarios.findOrCreate({
-                where: {
-                    telefone: cadastro.telefone
-                },
-                defaults: cadastro
-            })
+            const verificar = await this.verificar(cadastro)
 
-            return criado
-                ? newCadastro
-                : 'Telefone já cadastrado!'
+            if (!verificar) {
+                await db.usuarios.create(cadastro.cadastro)
+                return false
+            }
+            return verificar
+
         } catch (error) {
             console.error(error)
-            throw new Error('Erro ao verificar os dados');
         }
 
     }
 
-    async login(login, token) {
+    async login(login) {
         try {
-            if (token) {
-                return
-            }
+            const verificar = await this.verificar(login)
+            return verificar
 
-            const usuario = await db.usuarios.findOne({
-                attributes: ['idUsuario', 'email', 'senha'],
-                where: {
-                    email: login.email,
-                    deletado: 'F'
-                }
-            })
-
-            if (usuario) {
-                const verificarSenha = bcrypt.compareSync(login.senha, usuario.senha);
-                if (verificarSenha) {
-                    return usuario
-                } else {
-                    return 'Senha incorreta!'
-                }
-            }
-            return 'Email não cadastrado!'
         } catch (error) {
             console.error(error)
         }
@@ -81,9 +115,9 @@ class UsuarioRepository {
                 attributes: ['nome', 'cpf', 'email', 'foto', 'telefone', 'dataNascimento']
             })
             return usuario ? usuario : 'Essa conta foi deletada, para recuperar entre em contato.'
+
         } catch (error) {
             console.error(error)
-
         }
     }
 
@@ -93,67 +127,23 @@ class UsuarioRepository {
 
     async atualaizar(idU, usuario) {
         try {
-            if (usuario.email) {
-                const email = await db.usuarios.findOne({
-                    where: {
-                        email: usuario.email,
-                        [Op.not]: [{ idUsuario: idU }]
-                    }
-                })
-                if (!email) {
-                    await db.usuarios.update(usuario, {
-                        where: { idUsuario: idU }
-                    })
-                    return
+            const verificar = await this.verificar(usuario, idU)
+            if (!verificar) {
+                if (usuario.usuario.novaSenha) {
+                    usuario.usuario.senha = usuario.usuario.novaSenha
                 } else {
-                    return 'Email já cadastrado'
+                    delete usuario.usuario.senha
                 }
-            }
 
-            if (usuario.telefone) {
-                const telefone = await db.usuarios.findOne({
-                    where: {
-                        telefone: usuario.telefone,
-                        [Op.not]: [{ idUsuario: idU }]
-                    }
+                await db.usuarios.update(usuario.usuario, {
+                    where: { idUsuario: idU }
                 })
-
-                if (!telefone) {
-                    await db.usuarios.update(usuario, {
-                        where: { idUsuario: idU }
-                    })
-                    return
-                } else {
-                    return 'Telefone já cadastrado'
-                }
+                return false
             }
-
-            if (usuario.senha) {
-                const senha = await db.usuarios.findOne({
-                    where: {
-                        senha: usuario.senha,
-                        idUsuario: idU
-                    }
-                })
-
-                if (senha) {
-                    await db.usuarios.update(usuario.senha, {
-                        where: { idUsuario: idU }
-                    })
-                    return
-                } else {
-                    return 'Senha incorreta'
-                }
-            }
-
-            await db.usuarios.update(usuario, {
-                where: { idUsuario: idU }
-            })
-            return
+            return verificar
 
         } catch (error) {
             console.error(error)
-            throw new Error('Erro ao verificar os dados');
         }
     }
 

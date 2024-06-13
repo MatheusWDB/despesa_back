@@ -4,41 +4,29 @@ const bcrypt = require('bcrypt');
 
 class UsuarioController {
 
-    async verificar(req, res) {
-        const dados = req.body
-        const resposta = await UsuarioRepository.verificar(dados)
-        if (resposta !== true) {
-            return res.status(400).send(resposta)
-        }
-        res.status(200).end()
-    }
-
     async cadastrar(req, res) {
-        const cadastro = req.body
-        cadastro.senha = bcrypt.hashSync(req.body.senha, 8);
-        const resposta = await UsuarioRepository.cadastrar(cadastro)
-        if (typeof resposta === 'object') {
+        const body = req.body
+        body.cadastro.senha = bcrypt.hashSync(body.cadastro.senha, 8)
+        const resposta = await UsuarioRepository.cadastrar(body)
+        if (!resposta) {
             return res.status(201).send('Cadastro realizado com sucesso!')
         }
-        return res.status(400).send(resposta)
+        res.status(400).send(resposta)
     }
 
     async login(req, res) {
         const login = req.body
-        const token = false
-        const resposta = await UsuarioRepository.login(login, token)
+        const resposta = await UsuarioRepository.login(login)
         if (typeof resposta !== 'string') {
             const token = jwtHelper.generateToken({ resposta });
             return res.status(200).json({ token })
-
         }
         res.status(401).send(resposta)
     }
 
     async loginToken(req, res) {
-        const usuario = req.body
-        const token = true
-        await UsuarioRepository.login(usuario, token)
+        const login = req.body
+        await UsuarioRepository.login(login)
         res.status(200).end()
     }
 
@@ -62,15 +50,16 @@ class UsuarioController {
     async atualizar(req, res) {
         const idU = req.params.idU
         const usuario = req.body
-        if (usuario.senha) {
-            usuario.senha = bcrypt.hashSync(req.body.senha, 8)
+        console.log(usuario)
+        if (usuario.usuario.novaSenha) {
+            usuario.usuario.novaSenha = bcrypt.hashSync(usuario.usuario.novaSenha, 8)
         }
         const resposta = await UsuarioRepository.atualaizar(idU, usuario)
         if (!resposta) {
             return res.status(204).end()
-        } else {
-            return res.status(409).send(resposta)
         }
+        return res.status(409).send(resposta)
+
     }
 }
 
