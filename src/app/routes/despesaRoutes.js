@@ -4,7 +4,7 @@ const authenticateToken = require('../middlewares/authMiddleware');
 
 const router = Router();
 
-router.post('/:idU/adicionar', authenticateToken, DespesaController.adicionar, () => {
+router.post('/despesa/:idU/adicionar', authenticateToken, DespesaController.adicionar, () => {
     /*
         #swagger.tags = ['Despesa']
         #swagger.summary = 'Adiciona despesa'
@@ -25,7 +25,7 @@ router.post('/:idU/adicionar', authenticateToken, DespesaController.adicionar, (
         }
 */
 })
-router.get('/:idU/listar', authenticateToken, DespesaController.listar, () => {
+router.get('/despesa/:idU/listar', authenticateToken, DespesaController.listar, () => {
     /*
         #swagger.tags = ['Despesa']
         #swagger.summary = 'Lista as despesas'
@@ -47,7 +47,7 @@ router.get('/:idU/listar', authenticateToken, DespesaController.listar, () => {
         }
 */
 })
-router.put('/:idD/atualizar-despesa', authenticateToken, DespesaController.atualizar, () => {
+router.put('/despesa/:idD/atualizar', authenticateToken, DespesaController.atualizar, () => {
     /*
         #swagger.tags = ['Despesa']
         #swagger.summary = 'Atualizar despesa'
@@ -70,7 +70,7 @@ router.put('/:idD/atualizar-despesa', authenticateToken, DespesaController.atual
         
 */
 })
-router.put('/:idD/deletar', authenticateToken, DespesaController.deletar, () => {
+router.put('/despesa/:idD/deletar', authenticateToken, DespesaController.deletar, () => {
     /*
         #swagger.tags = ['Despesa']
         #swagger.summary = 'Deletar despesa'

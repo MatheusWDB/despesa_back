@@ -76,6 +76,18 @@ class UsuarioRepository {
                 }
             }
 
+            if (dados.cpf) {
+                const valido = await db.usuarios.findOne({
+                    attributes: ['email'],
+                    where: { cpf: dados.cpf}
+                })
+
+                if(valido){
+                    return valido
+                }
+                return false
+            }
+
             return false
 
         } catch {

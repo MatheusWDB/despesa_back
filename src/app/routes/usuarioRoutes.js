@@ -62,7 +62,7 @@ router.post('/login', UsuarioController.login, () => {
      */
 });
 
-router.post('/login-token', authenticateToken, UsuarioController.loginToken, () => {
+router.post('/login/token', authenticateToken, UsuarioController.loginToken, () => {
 
 })
 
@@ -94,7 +94,7 @@ router.post('/recuperar', UsuarioController.recuperar, () => {
      */
 });
 
-router.get('/:idU/usuario', authenticateToken, UsuarioController.usuarioInfo, () => {
+router.get('/usuario/:idU', authenticateToken, UsuarioController.usuarioInfo, () => {
     /*
         #swagger.tags = ['Usuário']
         #swagger.summary = 'Listar as informações do Usuário'
@@ -109,7 +109,7 @@ router.get('/:idU/usuario', authenticateToken, UsuarioController.usuarioInfo, ()
      */
 })
 
-router.put('/:idU/atualizar', authenticateToken, UsuarioController.atualizar, () => {
+router.put('/usuario/:idU/atualizar', authenticateToken, UsuarioController.atualizar, () => {
     /*
         #swagger.tags = ['Usuário']
         #swagger.summary = 'Atualizar dados'

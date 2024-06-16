@@ -45,6 +45,11 @@ class UsuarioController {
 
     async recuperar(req, res) {
         const cpf = req.body;
+        const resposta = await UsuarioRepository.verificar(cpf)
+        if (resposta) {
+            return res.status(200).json(resposta)
+        }
+        return res.status(400).send('CPF não cadastrado')
     }
 
     async atualizar(req, res) {
