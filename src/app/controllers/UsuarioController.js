@@ -1,6 +1,8 @@
 const UsuarioRepository = require('../repositories/UsuarioRepository')
 const jwtHelper = require('../utils/jwtHelper');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt')
+const transporter = require('../utils/nodemailer')
+require('dotenv').config()
 
 class UsuarioController {
 
@@ -46,10 +48,21 @@ class UsuarioController {
     async recuperar(req, res) {
         const cpf = req.body;
         const resposta = await UsuarioRepository.verificar(cpf)
-        if (resposta) {
-            return res.status(200).json(resposta)
-        }
-        return res.status(400).send('CPF não cadastrado')
+        if (!resposta) {
+            return res.status(400).send('CPF não cadastrado')
+        } 
+        const novaSenha = 1234        
+        transporter.sendMail({
+            from: process.env.USEREMAIL,
+            to: resposta.email,
+            subject: "Assunto do E-mail",
+            text: `Corpo do e-mail em texto plano ${novaSenha}`,
+        }).then(info => {
+            res.status(200).json(info)
+        }).catch(error => {
+            console.error(error)
+            res.status(400).json(error)
+        })
     }
 
     async atualizar(req, res) {

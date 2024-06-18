@@ -1,20 +1,14 @@
 const nodemailer = require('nodemailer')
+require('dotenv').config()
 
-const user = ''
-const pass = ''
-const port = 0
+const user = process.env.USEREMAIL
+const pass = process.env.PASSEMAIL
+const port = 587
 
 const transporter = nodemailer.createTransport({
-    host: 'localhost',
+    host: process.env.HOSTEMAIL,
     port: port,
     auth: { user, pass }
 })
-const mailOptions = {
-    from: '"Seu Nome" <seu_email@example.com>',
-    to: "destinatario@example.com",
-    subject: "Assunto do E-mail",
-    text: "Corpo do e-mail em texto plano",
-    html: "<b>Corpo do e-mail em HTML</b>"
-}
 
-transporter.sendMail(mailOptions)
+module.exports = transporter
